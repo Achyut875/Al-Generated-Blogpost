@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Content Generator</title>
+</head>
+<body>
+    <h1>Generate Blog Content</h1>
+    <form id="generate-form">
+        <label for="user-input">Enter Text:</label><br>
+        <textarea id="user-input" name="user_input" rows="4" cols="50"></textarea><br>
+        <button type="submit">Generate Content</button>
+    </form>
+    <h2>Generated Content:</h2>
+    <p id="generated-content"></p>
+
+    <script>
+        document.getElementById('generate-form').addEventListener('submit', function(event) {
+            event.preventDefault();
+
+            const userInput = document.getElementById('user-input').value;
+
+            fetch('/generate', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ user_input: userInput }),
+            })
+            .then(response => response.json())
+            .then(data => {
+                document.getElementById('generated-content').textContent = data.generated_content;
+            })
+            .catch(error => {
+                console.error('Error:', error);
+            });
+        });
+    </script>
+</body>
+</html>

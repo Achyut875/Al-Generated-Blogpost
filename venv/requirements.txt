@@ -1,0 +1,3 @@
+Flask
+markovify
+sqlite3
